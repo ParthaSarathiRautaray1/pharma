@@ -5,6 +5,8 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import { env } from './config/env';
 import { errorHandler } from './middleware/error-handler';
+import { authRouter } from './modules/auth/auth.routes';
+import './shared/types/auth';
 
 /**
  * Express application factory. Feature routers are mounted here as
@@ -41,10 +43,8 @@ export function createApp(): Express {
     res.json({ success: true, data: { status: 'ok', uptime: process.uptime() } });
   });
 
-  // API v1 routes are mounted here module by module:
-  // app.use('/api/v1/auth', authRouter);
-  // app.use('/api/v1/inventory', inventoryRouter);
-  // ...
+  // API v1 routes
+  app.use('/api/v1/auth', authRouter);
 
   // 404 for unknown API routes
   app.use((_req: Request, res: Response) => {
