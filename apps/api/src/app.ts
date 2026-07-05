@@ -7,6 +7,13 @@ import { env } from './config/env';
 import { errorHandler } from './middleware/error-handler';
 import { authRouter } from './modules/auth/auth.routes';
 import { dashboardRouter } from './modules/dashboard/dashboard.routes';
+import {
+  batchesRouter,
+  brandsRouter,
+  categoriesRouter,
+  medicinesRouter,
+  stockRouter,
+} from './modules/inventory/inventory.routes';
 import './shared/types/auth';
 
 /**
@@ -47,6 +54,11 @@ export function createApp(): Express {
   // API v1 routes
   app.use('/api/v1/auth', authRouter);
   app.use('/api/v1/dashboard', dashboardRouter);
+  app.use('/api/v1/categories', categoriesRouter);
+  app.use('/api/v1/brands', brandsRouter);
+  app.use('/api/v1/medicines', medicinesRouter);
+  app.use('/api/v1/batches', batchesRouter);
+  app.use('/api/v1/stock', stockRouter);
 
   // 404 for unknown API routes
   app.use((_req: Request, res: Response) => {
