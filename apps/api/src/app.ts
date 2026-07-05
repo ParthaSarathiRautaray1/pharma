@@ -4,6 +4,7 @@ import express, { type Express, type Request, type Response } from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import { env } from './config/env';
+import { errorHandler } from './middleware/error-handler';
 
 /**
  * Express application factory. Feature routers are mounted here as
@@ -52,6 +53,9 @@ export function createApp(): Express {
       error: { code: 'NOT_FOUND', message: 'Resource not found' },
     });
   });
+
+  // Must be registered last
+  app.use(errorHandler);
 
   return app;
 }
