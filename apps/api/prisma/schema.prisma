@@ -18,7 +18,11 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // Runtime queries go through Supabase's transaction pooler (port 6543).
+  url       = env("DATABASE_URL")
+  // Migrations need a direct/session connection (port 5432) — pgbouncer
+  // can't run them. On a self-hosted VPS both point at the same server.
+  directUrl = env("DIRECT_URL")
 }
 
 // ─── Enums ───────────────────────────────────────────────────────────
