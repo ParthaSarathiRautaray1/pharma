@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Builds
+dist/
+build/
+*.tsbuildinfo
+
+# Environment — never commit secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+apps/api/logs/*
+!apps/api/logs/.gitkeep
+*.log
+npm-debug.log*
+
+# Uploads (local storage adapter)
+apps/api/uploads/*
+!apps/api/uploads/.gitkeep
+
+# Prisma
+apps/api/prisma/*.db
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Vercel / deployment artifacts
+.vercel/

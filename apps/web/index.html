@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="PharmaCare — modern pharmacy management software. Inventory, POS billing, GST invoicing, customers, suppliers and analytics in one place."
+    />
+    <meta name="theme-color" content="#0d9488" />
+    <title>PharmaCare — Modern Pharmacy Management Software</title>
+    <!-- Prevent theme flash: apply saved theme before first paint -->
+    <script>
+      (function () {
+        var t = localStorage.getItem('pharmacare-theme');
+        var dark =
+          t === 'dark' ||
+          (!t && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+// PharmaCare ERP — database schema
+// Full data model lands in Module 3 (Database Schema).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}

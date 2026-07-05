@@ -1,0 +1,74 @@
+@import 'tailwindcss';
+
+/* Dark mode via .dark class on <html> (toggled by the theme store) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * PharmaCare design tokens — healthcare-appropriate palette.
+ * Primary: deep teal (trust/clinical). Semantic colors for stock and
+ * expiry states. Consumed by Tailwind v4 and shadcn/ui components.
+ */
+@theme {
+  --color-background: oklch(0.985 0.002 200);
+  --color-foreground: oklch(0.21 0.03 240);
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.21 0.03 240);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.21 0.03 240);
+  --color-primary: oklch(0.55 0.11 190);
+  --color-primary-foreground: oklch(0.99 0 0);
+  --color-secondary: oklch(0.96 0.006 200);
+  --color-secondary-foreground: oklch(0.3 0.03 240);
+  --color-muted: oklch(0.96 0.006 200);
+  --color-muted-foreground: oklch(0.5 0.02 240);
+  --color-accent: oklch(0.94 0.02 190);
+  --color-accent-foreground: oklch(0.3 0.03 240);
+  --color-destructive: oklch(0.58 0.21 27);
+  --color-destructive-foreground: oklch(0.99 0 0);
+  --color-success: oklch(0.6 0.15 155);
+  --color-warning: oklch(0.75 0.16 75);
+  --color-border: oklch(0.91 0.008 220);
+  --color-input: oklch(0.91 0.008 220);
+  --color-ring: oklch(0.55 0.11 190);
+
+  --radius: 0.625rem;
+
+  --font-sans:
+    'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.dark {
+  --color-background: oklch(0.16 0.015 240);
+  --color-foreground: oklch(0.95 0.005 220);
+  --color-card: oklch(0.2 0.017 240);
+  --color-card-foreground: oklch(0.95 0.005 220);
+  --color-popover: oklch(0.2 0.017 240);
+  --color-popover-foreground: oklch(0.95 0.005 220);
+  --color-primary: oklch(0.7 0.11 185);
+  --color-primary-foreground: oklch(0.15 0.02 240);
+  --color-secondary: oklch(0.26 0.02 240);
+  --color-secondary-foreground: oklch(0.95 0.005 220);
+  --color-muted: oklch(0.26 0.02 240);
+  --color-muted-foreground: oklch(0.68 0.015 230);
+  --color-accent: oklch(0.28 0.03 200);
+  --color-accent-foreground: oklch(0.95 0.005 220);
+  --color-destructive: oklch(0.65 0.19 27);
+  --color-destructive-foreground: oklch(0.99 0 0);
+  --color-success: oklch(0.68 0.14 155);
+  --color-warning: oklch(0.78 0.15 80);
+  --color-border: oklch(0.29 0.02 240);
+  --color-input: oklch(0.29 0.02 240);
+  --color-ring: oklch(0.7 0.11 185);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
