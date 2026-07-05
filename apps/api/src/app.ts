@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import { env } from './config/env';
 import { errorHandler } from './middleware/error-handler';
 import { authRouter } from './modules/auth/auth.routes';
+import { dashboardRouter } from './modules/dashboard/dashboard.routes';
 import './shared/types/auth';
 
 /**
@@ -45,6 +46,7 @@ export function createApp(): Express {
 
   // API v1 routes
   app.use('/api/v1/auth', authRouter);
+  app.use('/api/v1/dashboard', dashboardRouter);
 
   // 404 for unknown API routes
   app.use((_req: Request, res: Response) => {
