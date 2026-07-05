@@ -6,6 +6,8 @@ import helmet from 'helmet';
 import { env } from './config/env';
 import { errorHandler } from './middleware/error-handler';
 import { authRouter } from './modules/auth/auth.routes';
+import { returnsRouter, salesRouter } from './modules/billing/billing.routes';
+import { customersRouter } from './modules/customers/customer.routes';
 import { dashboardRouter } from './modules/dashboard/dashboard.routes';
 import {
   batchesRouter,
@@ -59,6 +61,9 @@ export function createApp(): Express {
   app.use('/api/v1/medicines', medicinesRouter);
   app.use('/api/v1/batches', batchesRouter);
   app.use('/api/v1/stock', stockRouter);
+  app.use('/api/v1/sales', salesRouter);
+  app.use('/api/v1/returns', returnsRouter);
+  app.use('/api/v1/customers', customersRouter);
 
   // 404 for unknown API routes
   app.use((_req: Request, res: Response) => {

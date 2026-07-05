@@ -1,4 +1,4 @@
-import { Prisma, type StockMovementType } from '@prisma/client';
+import type { Prisma, StockMovementType } from '@prisma/client';
 import { subDays } from 'date-fns';
 import { prisma } from '../../config/prisma';
 import { AppError } from '../../shared/errors/app-error';

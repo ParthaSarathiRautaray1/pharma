@@ -10,6 +10,14 @@ const ForgotPasswordPage = lazy(() => import('@/features/auth/pages/ForgotPasswo
 const ResetPasswordPage = lazy(() => import('@/features/auth/pages/ResetPasswordPage'));
 const MarketingHomePage = lazy(() => import('@/features/marketing/pages/HomePage'));
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
+const POSPage = lazy(() => import('@/features/billing/pages/POSPage'));
+const SalesPage = lazy(() => import('@/features/billing/pages/SalesPage'));
+const CustomersPage = lazy(() => import('@/features/customers/pages/CustomersPage'));
+const CustomerDetailPage = lazy(() => import('@/features/customers/pages/CustomerDetailPage'));
+const InventoryPage = lazy(() => import('@/features/inventory/pages/InventoryPage'));
+const MedicineDetailPage = lazy(() => import('@/features/inventory/pages/MedicineDetailPage'));
+const StockAlertsPage = lazy(() => import('@/features/inventory/pages/StockAlertsPage'));
+const CatalogPage = lazy(() => import('@/features/inventory/pages/CatalogPage'));
 const ChangePasswordPage = lazy(() => import('@/features/settings/pages/ChangePasswordPage'));
 
 function Page({ children }: { children: ReactNode }) {
@@ -45,11 +53,15 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <Page><DashboardPage /></Page> },
           // Placeholders swapped for real pages as modules land
-          { path: 'billing', element: <ComingSoon title="POS Billing" /> },
-          { path: 'sales', element: <ComingSoon title="Sales" /> },
-          { path: 'inventory', element: <ComingSoon title="Inventory" /> },
+          { path: 'billing', element: <Page><POSPage /></Page> },
+          { path: 'sales', element: <Page><SalesPage /></Page> },
+          { path: 'inventory', element: <Page><InventoryPage /></Page> },
+          { path: 'inventory/alerts', element: <Page><StockAlertsPage /></Page> },
+          { path: 'inventory/catalog', element: <Page><CatalogPage /></Page> },
+          { path: 'inventory/:id', element: <Page><MedicineDetailPage /></Page> },
           { path: 'purchases', element: <ComingSoon title="Purchases" /> },
-          { path: 'customers', element: <ComingSoon title="Customers" /> },
+          { path: 'customers', element: <Page><CustomersPage /></Page> },
+          { path: 'customers/:id', element: <Page><CustomerDetailPage /></Page> },
           { path: 'suppliers', element: <ComingSoon title="Suppliers" /> },
           { path: 'samples', element: <ComingSoon title="Lab Samples" /> },
           { path: 'reports', element: <ComingSoon title="Reports" /> },
