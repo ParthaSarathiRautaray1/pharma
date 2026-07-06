@@ -19,7 +19,9 @@ services:
     rootDir: .
     # migrate deploy is idempotent; on the free plan it runs here (paid plans
     # can move it to `preDeployCommand` so it runs once per deploy, not per build).
-    buildCommand: npm ci && npm run build:api && npm run prisma:deploy --workspace=apps/api
+    # --include=dev is required: NODE_ENV=production makes `npm ci` skip
+    # devDependencies (@types/*, typescript, prisma CLI), which the build needs.
+    buildCommand: npm ci --include=dev && npm run build:api && npm run prisma:deploy --workspace=apps/api
     startCommand: npm run start --workspace=apps/api
     healthCheckPath: /health
     autoDeploy: true
