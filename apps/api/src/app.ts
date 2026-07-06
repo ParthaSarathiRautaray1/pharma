@@ -16,6 +16,11 @@ import {
   medicinesRouter,
   stockRouter,
 } from './modules/inventory/inventory.routes';
+import { purchasesRouter } from './modules/purchases/purchase.routes';
+import { emailRouter } from './modules/reports/email.routes';
+import { reportsRouter } from './modules/reports/report.routes';
+import { suppliersRouter } from './modules/suppliers/supplier.routes';
+import { notificationsRouter } from './modules/notifications/notification.routes';
 import './shared/types/auth';
 
 /**
@@ -64,6 +69,11 @@ export function createApp(): Express {
   app.use('/api/v1/sales', salesRouter);
   app.use('/api/v1/returns', returnsRouter);
   app.use('/api/v1/customers', customersRouter);
+  app.use('/api/v1/suppliers', suppliersRouter);
+  app.use('/api/v1/purchases', purchasesRouter);
+  app.use('/api/v1/reports', reportsRouter);
+  app.use('/api/v1/notifications', notificationsRouter);
+  app.use('/api/v1/email', emailRouter);
 
   // 404 for unknown API routes
   app.use((_req: Request, res: Response) => {

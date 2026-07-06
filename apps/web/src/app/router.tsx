@@ -18,6 +18,12 @@ const InventoryPage = lazy(() => import('@/features/inventory/pages/InventoryPag
 const MedicineDetailPage = lazy(() => import('@/features/inventory/pages/MedicineDetailPage'));
 const StockAlertsPage = lazy(() => import('@/features/inventory/pages/StockAlertsPage'));
 const CatalogPage = lazy(() => import('@/features/inventory/pages/CatalogPage'));
+const PurchasesPage = lazy(() => import('@/features/purchases/pages/PurchasesPage'));
+const PurchaseDetailPage = lazy(() => import('@/features/purchases/pages/PurchaseDetailPage'));
+const ReportsPage = lazy(() => import('@/features/reports/pages/ReportsPage'));
+const NotificationsPage = lazy(() => import('@/features/notifications/pages/NotificationsPage'));
+const SuppliersPage = lazy(() => import('@/features/suppliers/pages/SuppliersPage'));
+const SupplierDetailPage = lazy(() => import('@/features/suppliers/pages/SupplierDetailPage'));
 const ChangePasswordPage = lazy(() => import('@/features/settings/pages/ChangePasswordPage'));
 
 function Page({ children }: { children: ReactNode }) {
@@ -59,13 +65,15 @@ export const router = createBrowserRouter([
           { path: 'inventory/alerts', element: <Page><StockAlertsPage /></Page> },
           { path: 'inventory/catalog', element: <Page><CatalogPage /></Page> },
           { path: 'inventory/:id', element: <Page><MedicineDetailPage /></Page> },
-          { path: 'purchases', element: <ComingSoon title="Purchases" /> },
+          { path: 'purchases', element: <Page><PurchasesPage /></Page> },
+          { path: 'purchases/:id', element: <Page><PurchaseDetailPage /></Page> },
           { path: 'customers', element: <Page><CustomersPage /></Page> },
           { path: 'customers/:id', element: <Page><CustomerDetailPage /></Page> },
-          { path: 'suppliers', element: <ComingSoon title="Suppliers" /> },
+          { path: 'suppliers', element: <Page><SuppliersPage /></Page> },
+          { path: 'suppliers/:id', element: <Page><SupplierDetailPage /></Page> },
           { path: 'samples', element: <ComingSoon title="Lab Samples" /> },
-          { path: 'reports', element: <ComingSoon title="Reports" /> },
-          { path: 'notifications', element: <ComingSoon title="Notifications" /> },
+          { path: 'reports', element: <Page><ReportsPage /></Page> },
+          { path: 'notifications', element: <Page><NotificationsPage /></Page> },
           { path: 'settings', element: <ComingSoon title="Settings" /> },
           { path: 'settings/password', element: <Page><ChangePasswordPage /></Page> },
         ],

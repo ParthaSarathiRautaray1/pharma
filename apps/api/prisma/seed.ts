@@ -383,6 +383,22 @@ async function main() {
     ],
   });
 
+  // ── Document counters ─────────────────────────────────────────────
+  // Seed sequence counters up to the highest seeded document number so the
+  // first runtime sale/purchase does NOT regenerate a colliding number and
+  // roll back (CONFLICT). Keys must match the services' `${prefix}:${year}`.
+  const counterYear = 2026;
+  for (const [key, value] of [
+    [`invoice:${counterYear}`, invoiceSeq],
+    [`purchase:${counterYear}`, purchaseSeq],
+  ] as const) {
+    await prisma.counter.upsert({
+      where: { pharmacyId_key: { pharmacyId: pid, key } },
+      create: { pharmacyId: pid, key, value },
+      update: { value },
+    });
+  }
+
   await prisma.auditLog.create({
     data: {
       pharmacyId: pid, userId: owner.id, action: 'system.seed',
