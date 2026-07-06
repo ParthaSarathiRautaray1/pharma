@@ -1,0 +1,84 @@
+# Render Blueprint — PharmaCare API (apps/api)
+# Docs: https://render.com/docs/blueprint-spec
+#
+# One-time setup:
+#   1. Push this file to the repo root.
+#   2. Render Dashboard → New → Blueprint → pick this repo.
+#   3. Fill the values marked `sync: false` (secrets) in the dashboard.
+#
+# Runtime queries use Supabase's transaction pooler (DATABASE_URL, port 6543);
+# migrations run against the direct/session connection (DIRECT_URL, port 5432).
+# Put this service in the SAME region as the Supabase project — cross-region
+# latency is what forced the 20s interactive-transaction timeout in dev.
+services:
+  - type: web
+    name: pharmacare-api
+    runtime: node
+    plan: free
+    region: singapore # match your Supabase project region
+    rootDir: .
+    # migrate deploy is idempotent; on the free plan it runs here (paid plans
+    # can move it to `preDeployCommand` so it runs once per deploy, not per build).
+    buildCommand: npm ci && npm run build:api && npm run prisma:deploy --workspace=apps/api
+    startCommand: npm run start --workspace=apps/api
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "5000"
+      # ── URLs (set APP_URL/CORS_ORIGINS to your Vercel domain after web deploy)
+      - key: APP_URL
+        sync: false
+      - key: API_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      # ── Database (Supabase) — pooler for runtime, direct for migrations
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false
+      # ── Auth secrets (generate: openssl rand -base64 48)
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_ACCESS_EXPIRES_IN
+        value: 15m
+      - key: JWT_REFRESH_EXPIRES_IN
+        value: 7d
+      - key: BCRYPT_ROUNDS
+        value: "12"
+      # ── Email (optional; unset = dev-log transport)
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURE
+        value: "false"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_FROM
+        value: PharmaCare <no-reply@pharmacare.app>
+      # ── File storage — Render's disk is ephemeral, so use Supabase Storage
+      - key: STORAGE_DRIVER
+        value: supabase
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: SUPABASE_BUCKET
+        value: pharmacare
+      # ── Rate limiting / logging
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "900000"
+      - key: RATE_LIMIT_MAX
+        value: "300"
+      - key: LOG_LEVEL
+        value: info

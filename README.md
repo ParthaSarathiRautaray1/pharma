@@ -37,7 +37,18 @@ npm run dev:web    # http://localhost:5173
 | `npm run lint` / `typecheck` / `format` | Quality gates (also run in CI) |
 | `npm run prisma:studio` | Browse the database |
 
+## Deployment
+
+Web → Vercel, API → Render, DB → Supabase (or self-hosted VPS + PM2 + Nginx).
+Blueprint files: [`render.yaml`](render.yaml), [`vercel.json`](vercel.json),
+[`apps/api/ecosystem.config.cjs`](apps/api/ecosystem.config.cjs). Full runbook:
+[Deployment](docs/DEPLOYMENT.md).
+
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
 - [Folder Structure](docs/FOLDER_STRUCTURE.md)
+- [API Design](docs/API_DESIGN.md)
+- [Database](docs/DATABASE.md)
+- [Deployment](docs/DEPLOYMENT.md)
+- [Build Progress](docs/PROGRESS.md)

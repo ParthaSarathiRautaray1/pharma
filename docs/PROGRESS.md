@@ -18,7 +18,7 @@ Phased, module-by-module build of PharmaCare ERP. Each module is committed separ
 | 11 | Suppliers + Purchases | Done | Supplier CRUD + purchase order/receive/pay workflow |
 | 12 | Reports + Notifications + Email/WhatsApp | Done | Reports, notifications, email helpers, WhatsApp links |
 | 13 | Marketing website | Done | Public homepage with product, modules, workflow, trust, and demo CTA |
-| 14 | Deployment | Pending | |
+| 14 | Deployment | Done | [DEPLOYMENT.md](DEPLOYMENT.md) - Render/Vercel/Supabase + VPS runbook, blueprints |
 
 ## Module 8 - Inventory
 
@@ -151,6 +151,28 @@ Two blocking bugs found and fixed during this pass:
 
 Note: verification created demo rows (`PO-2026-00003` received, credit sale `INV-2026-00007`) that shifted some stock. Re-run `npm run prisma:seed` in `apps/api` to reset (now also seeds counters correctly).
 
+## Module 14 - Deployment
+
+Deployment scaffolding + runbook. No app code changed — this module is
+infrastructure config and documentation.
+
+- `render.yaml` - Render Blueprint for the API: `npm ci && build:api && prisma migrate deploy`
+  build, `start` command, `/health` check, and the full env-var surface (secrets as
+  `sync: false`, JWT secrets auto-generated). Notes to co-locate the API with the
+  Supabase region (the latency source behind the tx-timeout fix).
+- `vercel.json` - web build (`build:web` -> `apps/web/dist`) + SPA catch-all rewrite so
+  deep-link refreshes on `/app/*` don't 404. Cross-origin API via `VITE_API_URL`.
+- `apps/api/ecosystem.config.cjs` - PM2 cluster config for the self-hosted VPS path
+  (safe as cluster today; note added for guarding future cron jobs to one instance).
+- `docs/DEPLOYMENT.md` - end-to-end runbook: Supabase provisioning, Render, Vercel,
+  CI/CD, and the Ubuntu VPS path (Postgres, PM2, Nginx SPA+proxy, certbot, pg_dump
+  backups), plus an env-var table and troubleshooting matrix.
+- README updated with a Deployment section and doc links.
+
+Verified: `apps/web` builds to `dist/`; `render.yaml`/`vercel.json` parse as valid.
+Actual cloud provisioning (creating the Render/Vercel projects) is a dashboard step
+the repo owner performs — the blueprints make it one-click + secret entry.
+
 ## Persistent Build Note - Prisma on Windows
 
 `npm run build --workspace=apps/api` consistently passes the TypeScript build step and then fails during `prisma generate` with:
@@ -163,7 +185,10 @@ This appears to be a Windows/OneDrive or running Node/Prisma process lock on Pri
 
 ## Next Resume Point
 
-Start Module 14 - Deployment.
+All 14 planned modules are built. Remaining work is operational: provision the
+Render/Vercel/Supabase projects from the blueprints (dashboard + secrets), then
+optionally the lab-samples module (currently a "Coming Soon" placeholder) and the
+scheduled jobs (expiry/low-stock scans) referenced in ARCHITECTURE.md.
 
 ## Notes for next session
 - Follow existing patterns: `apiErrorMessage` for toasts, `PageHeader`, feature-based folders.
